@@ -1,14 +1,17 @@
-const initialState = {
-  "rarity" : "normal",
-  baseItem : 'BodyEV',
-  rarePrefixText: "",
-  rareSuffixText: "",
-  "defenseStats" : [["Evasion Rating:", 737]],
-  "levelRequirements" : [["Requires Level", 68], [183, "Dexterity"]],
-  craftedAffix: []}
+import {AssassinsGarb} from "../base-item-states";
+import {generateAffixList} from "../all-mods";
 
+function getDefaultState(defaultState = AssassinsGarb) {
+    defaultState.rarity = "normal";
+    defaultState.rarePrefixText = "";
+    defaultState.rareSuffixText = "";
+    defaultState.craftedAffix = [];
+    defaultState.baseMods = generateAffixList(defaultState.possibleAffixes);
 
-export default function ( state = initialState, action) {
+    return defaultState;
+}
+
+export default function ( state = getDefaultState(), action) {
     switch (action.type) {
         case 'SET_RARITY_MAGIC':
             return {...state, "rarity" : "magic"};
@@ -33,6 +36,9 @@ export default function ( state = initialState, action) {
             break;
         case 'REMOVE_CRAFTED_MOD':
             return {...state, craftedAffix: []};
+            break;
+        case 'SWAP_ITEM':
+            return getDefaultState(action.payload);
             break;
         default:
             return state;

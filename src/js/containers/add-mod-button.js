@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import DynamicDisplay from './dynamic-display-container';
 import {craftTransmute, craftAugment, craftScour, craftAlteration, craftRegal, craftExalt, craftAlchemy,
   craftChaos, craftDivine, craftAnnulment, resetCurrencyCounter, changeOptionConfiguration, masterCraft,
-  removeMasterCraft} from '../actions/index';
+  removeMasterCraft, debugAction, notifyUser} from '../actions/index';
 require('../../index.css');
 
 
@@ -12,7 +12,7 @@ class CraftingButtonField extends Component {
 
     transmuteItem() {
       if (this.props.currentProperties.rarity!=="normal") {
-        alert("Item must be normal rarity to use a Transmute Orb");
+        notifyUser("Item must be normal rarity to use a Transmute Orb");
       } else {
           this.props.craftTransmute();
       }
@@ -22,7 +22,7 @@ class CraftingButtonField extends Component {
       if (this.props.currentProperties.rarity==="magic" && this.props.currentAffixs.length===1) {
           this.props.craftAugment();
       } else if (this.props.currentProperties.rarity!=="magic" || this.props.currentAffixs.length!==1) {
-        alert("Item must be magic rarity with 1 affix to use an Augment Orb")
+        notifyUser("Item must be magic rarity with 1 affix to use an Augment Orb")
       }
     }
 
@@ -30,7 +30,7 @@ class CraftingButtonField extends Component {
       if (this.props.currentProperties.rarity==="magic") {
           this.props.craftAlteration();
       } else {
-        alert("Item must be magic rarity to use an Alteration Orb")
+        notifyUser("Item must be magic rarity to use an Alteration Orb")
       }
     }
 
@@ -38,7 +38,7 @@ class CraftingButtonField extends Component {
       if (this.props.currentProperties.rarity==="magic") {
         this.props.craftRegal();
       } else {
-        alert("Item must be magic rarity to use a Regal Orb")
+        notifyUser("Item must be magic rarity to use a Regal Orb")
       }
     }
 
@@ -46,7 +46,7 @@ class CraftingButtonField extends Component {
       if (this.props.currentProperties.rarity==="rare") {
         this.props.craftExalt();
       } else {
-        alert("Item must be rare rarity to use an Exalt Orb")
+        notifyUser("Item must be rare rarity to use an Exalt Orb")
       }
     }
 
@@ -54,7 +54,7 @@ class CraftingButtonField extends Component {
       if (this.props.currentProperties.rarity==="rare") {
         this.props.craftChaos();
       } else {
-        alert("Item must be rare rarity to use a Chaos Orb")
+        notifyUser("Item must be rare rarity to use a Chaos Orb")
       }
     }
 
@@ -62,7 +62,7 @@ class CraftingButtonField extends Component {
       if (this.props.currentProperties.rarity==="normal") {
         this.props.craftAlchemy();
       } else {
-        alert("Item must be normal rarity to use an Alchemy Orb")
+        notifyUser("Item must be normal rarity to use an Alchemy Orb")
       }
     }
 
@@ -70,7 +70,7 @@ class CraftingButtonField extends Component {
       if (this.props.currentAffixs.length+this.props.currentProperties.craftedAffix.length>0) {
         this.props.craftAnnulment();
       } else {
-        alert("Item must have at least one property to use an Annulment Orb")
+        notifyUser("Item must have at least one property to use an Annulment Orb")
       }
     }
 
@@ -78,8 +78,12 @@ class CraftingButtonField extends Component {
       if (this.props.currentAffixs.length>0) {
         this.props.craftDivine();
       } else {
-        alert("Item must have at least one property to use a Divine Orb")
+        notifyUser("Item must have at least one property to use a Divine Orb")
       }
+    }
+
+    debugItem(){
+       this.props.debugAction();
     }
 
     openOptionsMenu() {
@@ -100,6 +104,7 @@ class CraftingButtonField extends Component {
               <button className="orbButton" data-tooltip="Randomly removes one affix, but this will not change the items rarity" id="annulment" onClick={() => this.annulmentItem()} />
               <button className="orbButton" data-tooltip="Downgrades a magic or rare item to normal and removes all affixes" id="scour" onClick={() => this.props.craftScour()} />
               <button className="orbButton" data-tooltip="Rerolls all affix values, but only in the tier they already were" id="divine" onClick={() => this.divineItem()} />
+              <button className="orbButton" data-tooltip="DEBUG" id="debug" onClick={() => this.debugItem()} />
             </div>
             <div className="metamodButtonContainer">
               <button data-tooltip="Crafts the Master Meta-Mod 'Prefixes cannot be changed' Cost: 2 Exalt" className= "resetCurrencyCounter" onClick={() => this.props.masterCraft('Tora', 'MetaMod')}><span>Prefix Cannot Change</span></button>
@@ -134,6 +139,7 @@ function matchDispatchToProps(dispatch){
                                craftChaos: craftChaos,
                                craftAnnulment: craftAnnulment,
                                craftDivine: craftDivine,
+                               debugAction: debugAction,
                                craftAlteration: craftAlteration,
                                resetCurrencyCounter: resetCurrencyCounter,
                                masterCraft: masterCraft,

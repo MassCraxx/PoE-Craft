@@ -40,7 +40,7 @@ class ItemPropertiesDisplay extends Component {
     }
 
     findMagicName() {
-      var baseItemName = "Assassin\'s Garb";
+      var baseItemName = this.props.currentProperties.baseName;
       var A = this.props.currentAffixs.slice();
       var prefixText = "";
       var suffixText = "";
@@ -56,7 +56,7 @@ class ItemPropertiesDisplay extends Component {
     }
 
     findRareName() {
-      var baseItemName = "Assassin\'s Garb";
+      var baseItemName = this.props.currentProperties.baseName;
       var prefixText = this.props.currentProperties.rarePrefixText;
       var suffixText = this.props.currentProperties.rareSuffixText;
       return prefixText + " " + suffixText + " " + baseItemName
@@ -87,7 +87,7 @@ class ItemPropertiesDisplay extends Component {
       } else if (this.props.currentProperties.rarity === "rare") {
         itemHeaderName = this.findRareName();
       } else {
-        itemHeaderName = "Assassin\'s Garb";
+        itemHeaderName = this.props.currentProperties.baseName;
       }
       var itemHeaderImageSource;
       if (this.props.currentProperties.rarity==="normal") {

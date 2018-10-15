@@ -17,6 +17,7 @@ export default function (state = initialState, action) {
             return newCurrencyCount;
             break;
         case 'RESET_CURRENCY_COUNTER':
+        case 'SWAP_ITEM':
             return initialState;
             break;
         default:

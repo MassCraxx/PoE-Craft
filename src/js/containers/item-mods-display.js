@@ -71,10 +71,12 @@ class ItemModsDisplay extends Component {
     }
 
     render() {
+        var iconFile = require("../../assets/" + this.props.currentProperties.iconFile);
+        var altName = this.props.currentProperties.baseName;
         return (
           <div className='itemStatsContainer'>
               <ItemPropertiesDisplay />
-              <div className="itemImageDiv"><img src={require("../../assets/BodyDEX/AssassinsGarb.png")} alt='BodyDEX'/></div>
+              <div className="itemImageDiv"><img src={iconFile} alt={altName}/></div>
               <div className="affixContainer">
                 {this.formatAffixData()}
                 {this.formatCraftedAffixData()}

@@ -2,7 +2,11 @@ export default function (state = [], action) {
     let newArray = state.slice();
     switch (action.type) {
         case 'ADD_NEW_AFFIX':
-            newArray.splice(newArray.length, 0, action.payload)
+            if(action.payload === undefined){
+                console.log("WARN: Prevent adding undefined affix");
+                return state;
+            }
+            newArray.splice(newArray.length, 0, action.payload);
             return newArray;
             break;
         case 'CRAFT_SCOUR':
@@ -14,6 +18,8 @@ export default function (state = [], action) {
         case 'RANDOMIZE_AFFIX_VALUES':
             return action.payload;
             break;
+        case 'SWAP_ITEM':
+            return [];
         default:
             return state;
     }

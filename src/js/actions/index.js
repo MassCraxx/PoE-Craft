@@ -1,8 +1,18 @@
-import {BodyDEX} from '../all-mods';
+import {SorcererGloves} from '../base-item-states';
 import {rarePrefixText, rareSuffixText} from '../rarePrefixSuffixNames';
 import {MasterModList} from '../master-craft-mods';
 import store from '../../index';
 
+//FIXME: Create item selection
+export const debugAction = () => {
+    var baseState = SorcererGloves;
+    return function (dispatch) {
+        dispatch({
+            type: 'SWAP_ITEM',
+            payload: baseState
+        })
+    }
+};
 
 export const craftTransmute = () => {
     if (store.getState().currentAffixs.length<6 && store.getState().currentProperties.rarity==="normal") {
@@ -17,7 +27,7 @@ export const craftTransmute = () => {
                   payload: ['transmute', 1]})
       }
     } else if (store.getState().currentAffixs.length>=6) {
-        alert("No more room for mods");
+        notifyUser("No more room for mods");
       return {
         type: 'ITEM_AFFIXS_FULL'
       }
@@ -33,7 +43,7 @@ export const craftAugment = () => {
                   payload: ['augment', 1]})
       }
     } else if (store.getState().currentAffixs.length>=6) {
-        alert("No more room for mods");
+        notifyUser("No more room for mods");
       return {
         type: 'ITEM_AFFIXS_FULL'
       }
@@ -54,7 +64,7 @@ export const craftScour = () => {
                 payload: ['scour', 1]})
     };
   } else {
-    alert("Item is already normal rarity");
+    notifyUser("Item is already normal rarity");
     return {
       type: 'ALREADY_NORMAL'
     }
@@ -102,7 +112,7 @@ export const craftExalt = () => {
                 payload: ['exalt', 1]})
     };
   } else if (totalAffixCount>=6) {
-      alert("No more room for mods");
+      notifyUser("No more room for mods");
     return {
       type: 'ITEM_AFFIXS_FULL'
     }
@@ -191,13 +201,13 @@ export const masterCraft = (master, modName) => {
   var prefixSuffixCount = calculatePrefixAndSuffixCount();
   var masterCraftCost = baseMods[modName].Cost;
   if (prefixSuffixCount[0]===3 && baseMods[modName].Type==='Prefix') {
-    alert("This item already has 3 Prefixes");
+    notifyUser("This item already has 3 Prefixes");
     return {type: 'PREFIXES_FULL'}
   } else if (prefixSuffixCount[1]===3 && baseMods[modName].Type==='Suffix') {
-    alert("This item already has 3 Suffixes");
+    notifyUser("This item already has 3 Suffixes");
     return {type: 'SUFFIXES_FULL'}
   } else if (store.getState().currentProperties.craftedAffix.length>0) {
-    alert("This item already has a crafted affix");
+    notifyUser("This item already has a crafted affix");
     return {type: 'ALREADY_HAS_CRAFTED_AFFIX'}
   } else {
       return function(dispatch) {
@@ -216,7 +226,7 @@ export const removeMasterCraft = () => {
       dispatch({type: 'COUNT_CURRENCY',
                 payload: ['scour', 1]})
     } else {
-      alert("There are no crafted mods to be removed")
+      notifyUser("There are no crafted mods to be removed")
       dispatch({type: 'NO_CRAFTED_MOD_EXISTS'})
     }
   }
@@ -337,12 +347,20 @@ function randomizeAffixValues() {
 };
 
 function chooseRandomAffix() {
-    var baseMods = BodyDEX;
+    var baseMods = store.getState().currentProperties.baseMods;
     var filteredMods = filterBaseMods(baseMods);
+    if(Object.keys(filteredMods.filteredMods).length === 0){
+        console.log("ERROR: No available mods found.");
+        return;
+    }
     var chosenMod =  chooseRandomMod(filteredMods);
     var chosenTier = chooseRandomTier(chosenMod);
     var chosenValue = chooseRandomValue(chosenTier);
     if (chosenMod.length===1) {
+        if(chosenTier[0] === undefined){
+            console.log("ERROR: Tier of chosen mod was undefined!");
+            return;
+        }
       var firstAffixTier = chosenTier[0].tier
       return  [{"affix": chosenMod[0].Name,
                 "text": chosenMod[0].Text,
@@ -449,6 +467,10 @@ function filterBaseMods(baseMods) {
 };
 
 function chooseRandomTier(chosenMod) {
+    if(chosenMod[0] === undefined){
+        console.log("ERROR: Chosen mod was undefined!");
+        return;
+    }
     var tierNames = Object.keys(chosenMod[0].Tiers);
     var chosenTier =[];
     var tierWeightArr = [];
@@ -507,3 +529,8 @@ function chooseRandomValue(chosenTier) {
       chosenValue
     }
 };
+
+export function notifyUser(message){
+    // FIXME: Implement notification area
+    console.log(message);
+}
