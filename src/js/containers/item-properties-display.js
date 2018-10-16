@@ -7,15 +7,15 @@ class ItemPropertiesDisplay extends Component {
 
     calculateFlatDefensiveBonuses() {
       var A = this.props.currentAffixs.slice();
-      var flatBonuses = {Evasion: 0, Armor: 0, EnergyShield: 0}
+      var flatBonuses = {Evasion: 0, Armour: 0, EnergyShield: 0}
       var i;
       var n = A.length;
       for (i=0;i<n;i++) {
-        if(A[i][0].affix==="Flat Evasion" || A[i][0].affix==="Hybrid Flat Evasion/Armor" || A[i][0].affix==="Hybrid Flat Energy Shield/Evasion" || A[i][0].affix==="Hybrid Flat Evasion/Life") {
+        if(A[i][0].affix==="Flat Evasion" || A[i][0].affix==="Hybrid Flat Evasion/Armour" || A[i][0].affix==="Hybrid Flat Energy Shield/Evasion" || A[i][0].affix==="Hybrid Flat Evasion/Life") {
             flatBonuses.Evasion += A[i][0].value
-        } else if (A[i][0].affix==="Flat Armor" || A[i][0].affix==="Hybrid Flat Evasion/Armor" || A[i][0].affix==="Hybrid Flat Armor/Energy Shield" || A[i][0].affix==="Hybrid Flat Armor/Life") {
-            flatBonuses.Armor += A[i][0].value
-        } else if (A[i][0].affix==="Flat Energy Shield" || A[i][0].affix==="Hybrid Flat Armor/Energy Shield" || A[i][0].affix==="Hybrid Flat Energy Shield/Evasion" || A[i][0].affix==="Hybrid Flat Energy Shield/Life") {
+        } else if (A[i][0].affix==="Flat Armour" || A[i][0].affix==="Hybrid Flat Evasion/Armour" || A[i][0].affix==="Hybrid Flat Armour/Energy Shield" || A[i][0].affix==="Hybrid Flat Armour/Life") {
+            flatBonuses.Armour += A[i][0].value
+        } else if (A[i][0].affix==="Flat Energy Shield" || A[i][0].affix==="Hybrid Flat Armour/Energy Shield" || A[i][0].affix==="Hybrid Flat Energy Shield/Evasion" || A[i][0].affix==="Hybrid Flat Energy Shield/Life") {
             flatBonuses.EnergyShield += A[i][0].value
         }
       }
@@ -24,15 +24,15 @@ class ItemPropertiesDisplay extends Component {
 
     calculatePercentDefensiveBonus() {
       var A = this.props.currentAffixs.slice();
-      var percentBonuses = {Evasion: 1.00, Armor: 1.00, EnergyShield: 1.00}
+      var percentBonuses = {Evasion: 1.00, Armour: 1.00, EnergyShield: 1.00}
       var i;
       var n = A.length;
       for (i=0;i<n;i++) {
-        if(A[i][0].affix==="%Evasion" || A[i][0].affix==="Hybrid %Evasion/%Armor" || A[i][0].affix==="Hybrid %Energy Shield/%Evasion" || A[i][0].affix==="Hybrid %Evasion/%StunBlock") {
+        if(A[i][0].affix==="%Evasion" || A[i][0].affix==="Hybrid %Evasion/%Armour" || A[i][0].affix==="Hybrid %Energy Shield/%Evasion" || A[i][0].affix==="Hybrid %Evasion/%StunBlock") {
             percentBonuses.Evasion += ((A[i][0].value/100))
-        } else if (A[i][0].affix==="%Armor" || A[i][0].affix==="Hybrid %Evasion/%Armor" || A[i][0].affix==="Hybrid %Armor/%Energy Shield" || A[i][0].affix==="Hybrid %Armor/%StunBlock") {
-            percentBonuses.Armor += ((A[i][0].value/100))
-        } else if (A[i][0].affix==="%Energy Shield" || A[i][0].affix==="Hybrid %Armor/%Energy Shield" || A[i][0].affix==="Hybrid %Energy Shield/%Evasion" || A[i][0].affix==="Hybrid %Energy Shield/%StunBlock") {
+        } else if (A[i][0].affix==="%Armour" || A[i][0].affix==="Hybrid %Evasion/%Armour" || A[i][0].affix==="Hybrid %Armour/%Energy Shield" || A[i][0].affix==="Hybrid %Armour/%StunBlock") {
+            percentBonuses.Armour += ((A[i][0].value/100))
+        } else if (A[i][0].affix==="%Energy Shield" || A[i][0].affix==="Hybrid %Armour/%Energy Shield" || A[i][0].affix==="Hybrid %Energy Shield/%Evasion" || A[i][0].affix==="Hybrid %Energy Shield/%StunBlock") {
             percentBonuses.EnergyShield += ((A[i][0].value/100))
         }
       }
@@ -65,19 +65,20 @@ class ItemPropertiesDisplay extends Component {
     formatPropertyData() {
       var A = Object.assign({}, this.props.currentProperties);
       var B = this.props.currentAffixs.slice();
+        var qualityBonus = 1 + (A.quality / 100);
       var flatBonuses = this.calculateFlatDefensiveBonuses();
       var percentBonuses = this.calculatePercentDefensiveBonus();
       var defenseStats = [];
       for (var i=0; i<A.defenseStats.length; i++) {
         var defenseValue = Number;
         if (A.defenseStats[i][0]==="Evasion Rating:") {
-          defenseValue = Math.floor((A.defenseStats[i][1] + flatBonuses.Evasion) * percentBonuses.Evasion)
+          defenseValue = Math.floor(((A.defenseStats[i][1] * qualityBonus) + flatBonuses.Evasion) * percentBonuses.Evasion)
         }
-        if (A.defenseStats[i][0]==="Armor Rating:") {
-          defenseValue = Math.floor((A.defenseStats[i][1] + flatBonuses.Armor) * percentBonuses.Armor)
+        if (A.defenseStats[i][0]==="Armour:") {
+          defenseValue = Math.floor(((A.defenseStats[i][1] * qualityBonus) + flatBonuses.Armour) * percentBonuses.Armour)
         }
         if (A.defenseStats[i][0]==="Energy Shield:") {
-          defenseValue = Math.floor((A.defenseStats[i][1] + flatBonuses.EnergyShield) * percentBonuses.EnergyShield)
+          defenseValue = Math.floor(((A.defenseStats[i][1] * qualityBonus) + flatBonuses.EnergyShield) * percentBonuses.EnergyShield)
         }
         defenseStats.push(<div id="propertyText" className="tooltipText">{A.defenseStats[i][0]} <span id="propertyValue">{defenseValue}</span></div>)
       }
@@ -97,10 +98,12 @@ class ItemPropertiesDisplay extends Component {
       } else {
         itemHeaderImageSource = require("../../assets/Misc/RareItemHeader.png")
       }
+
+      var quality = this.props.currentProperties.quality;
         return (
           <div className="itemProperties">
                 <div className="itemHeaderContainer"><img id="itemHeaderImage" src={itemHeaderImageSource}></img><div className="itemHeaderText">{itemHeaderName}</div></div>
-                <div id='propertyText' className="tooltipText">Quality: <span id="qualityValue">+20%</span></div>
+                <div id='propertyText' className="tooltipText">Quality: <span id="qualityValue">+{quality}%</span></div>
                 {defenseStats}
           </div>
         );

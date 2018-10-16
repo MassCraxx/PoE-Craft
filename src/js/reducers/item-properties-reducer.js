@@ -1,12 +1,16 @@
-import {AssassinsGarb} from "../base-item-states";
+import {AstralPlate} from "../base-item-states";
 import {generateAffixList} from "../all-mods";
+import {baseAffixes} from "../base-item-affixes";
 
-function getDefaultState(defaultState = AssassinsGarb) {
+function getDefaultState(defaultState = AstralPlate) {
     defaultState.rarity = "normal";
     defaultState.rarePrefixText = "";
     defaultState.rareSuffixText = "";
     defaultState.craftedAffix = [];
-    defaultState.baseMods = generateAffixList(defaultState.possibleAffixes);
+    if(!defaultState.quality){
+        defaultState.quality = 20;
+    }
+    defaultState.baseMods = generateAffixList(baseAffixes[defaultState.baseItem]);
 
     return defaultState;
 }

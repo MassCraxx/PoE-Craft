@@ -4,7 +4,7 @@ import {connect} from 'react-redux';
 import DynamicDisplay from './dynamic-display-container';
 import {craftTransmute, craftAugment, craftScour, craftAlteration, craftRegal, craftExalt, craftAlchemy,
   craftChaos, craftDivine, craftAnnulment, resetCurrencyCounter, changeOptionConfiguration, masterCraft,
-  removeMasterCraft, debugAction, notifyUser} from '../actions/index';
+  removeMasterCraft, switchItem, notifyUser} from '../actions/index';
 require('../../index.css');
 
 
@@ -82,8 +82,8 @@ class CraftingButtonField extends Component {
       }
     }
 
-    debugItem(){
-       this.props.debugAction();
+    switchItem(){
+       this.props.switchItem();
     }
 
     openOptionsMenu() {
@@ -104,7 +104,6 @@ class CraftingButtonField extends Component {
               <button className="orbButton" data-tooltip="Randomly removes one affix, but this will not change the items rarity" id="annulment" onClick={() => this.annulmentItem()} />
               <button className="orbButton" data-tooltip="Downgrades a magic or rare item to normal and removes all affixes" id="scour" onClick={() => this.props.craftScour()} />
               <button className="orbButton" data-tooltip="Rerolls all affix values, but only in the tier they already were" id="divine" onClick={() => this.divineItem()} />
-              <button className="orbButton" data-tooltip="DEBUG" id="debug" onClick={() => this.debugItem()} />
             </div>
             <div className="metamodButtonContainer">
               <button data-tooltip="Crafts the Master Meta-Mod 'Prefixes cannot be changed' Cost: 2 Exalt" className= "resetCurrencyCounter" onClick={() => this.props.masterCraft('Tora', 'MetaMod')}><span>Prefix Cannot Change</span></button>
@@ -114,7 +113,8 @@ class CraftingButtonField extends Component {
             <DynamicDisplay />
             <div className="resetButtonDiv">
               <button className= "resetCurrencyCounter" onClick={() => this.props.resetCurrencyCounter()}><span>RESET</span></button>
-              <button className= 'resetCurrencyCounter' onClick={() => this.openOptionsMenu()}><span>OPTIONS</span></button>
+                <button data-tooltip="Switch item" id="switch" onClick={() => this.switchItem()} />
+                <button className= 'resetCurrencyCounter' onClick={() => this.openOptionsMenu()}><span>OPTIONS</span></button>
             </div>
           </div>
         );
@@ -139,7 +139,7 @@ function matchDispatchToProps(dispatch){
                                craftChaos: craftChaos,
                                craftAnnulment: craftAnnulment,
                                craftDivine: craftDivine,
-                               debugAction: debugAction,
+                               switchItem: switchItem,
                                craftAlteration: craftAlteration,
                                resetCurrencyCounter: resetCurrencyCounter,
                                masterCraft: masterCraft,

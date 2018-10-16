@@ -1,11 +1,14 @@
-import {SorcererGloves} from '../base-item-states';
+import * as ItemBases from '../base-item-states';
 import {rarePrefixText, rareSuffixText} from '../rarePrefixSuffixNames';
 import {MasterModList} from '../master-craft-mods';
 import store from '../../index';
 
+let debugCount = 1;
 //FIXME: Create item selection
-export const debugAction = () => {
-    var baseState = SorcererGloves;
+export const switchItem = () => {
+    let keys = Object.keys(ItemBases);
+    const baseState = ItemBases[keys[debugCount%keys.length]];
+    debugCount++;
     return function (dispatch) {
         dispatch({
             type: 'SWAP_ITEM',
@@ -263,8 +266,8 @@ function chooseNewRarePrefixName() {
 
 function chooseNewRareSuffixName() {
   var B = Object.assign({}, rareSuffixText);
-  var randomSuffixNumber = Math.floor(Math.random()*(B.BodyArmor.length));
-  var suffixText = B.BodyArmor[randomSuffixNumber];
+  var randomSuffixNumber = Math.floor(Math.random()*(B.BodyArmour.length));
+  var suffixText = B.BodyArmour[randomSuffixNumber];
   return suffixText;
 };
 
@@ -356,6 +359,13 @@ function chooseRandomAffix() {
     var chosenMod =  chooseRandomMod(filteredMods);
     var chosenTier = chooseRandomTier(chosenMod);
     var chosenValue = chooseRandomValue(chosenTier);
+
+    if(chosenMod[0].Decimal){
+        chosenValue.chosenValue.forEach((value,i)=>{
+            chosenValue.chosenValue[i] /= 100;
+        })
+    }
+
     if (chosenMod.length===1) {
         if(chosenTier[0] === undefined){
             console.log("ERROR: Tier of chosen mod was undefined!");

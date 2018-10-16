@@ -4,6 +4,6 @@ export const rarePrefixText = ['Agony', 'Apocalypse', 'Armageddon', 'Beast', 'Be
    'Plague', 'Rage', 'Rapture', 'Rune', 'Skull', 'Sol', 'Soul', 'Sorrow', 'Spirit', 'Storm', 'Tempest', 'Torment', 'Vengeance', 'Victory', 'Viper', 'Vortex', 'Woe', 'Wrath']
 
 export const rareSuffixText = {
-  BodyArmor: ['Carapace', 'Cloak', 'Coat', 'Curtain', 'Guardian', 'Hide', 'Jack', 'Keep', 'Mantle', 'Pelt', 'Salvation', 'Sanctuary', 'Shell', 'Shelter', 'Shroud', 'Skin', 
+  BodyArmour: ['Carapace', 'Cloak', 'Coat', 'Curtain', 'Guardian', 'Hide', 'Jack', 'Keep', 'Mantle', 'Pelt', 'Salvation', 'Sanctuary', 'Shell', 'Shelter', 'Shroud', 'Skin',
   'Suit', 'Veil', 'Ward', 'Wrap']
 }

@@ -28,9 +28,6 @@ class ItemModsDisplay extends Component {
       for (var i=0; i<A.length; i++) {
         for (var j=0; j<A[i].length ;j++) {
           var modValue = Object.assign({}, A[i][j]);
-          if (modValue.affix==="Life Regen") {
-            modValue.value /= 100;
-          }
           arr.push(modValue);
         }
       }

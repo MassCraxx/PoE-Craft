@@ -9,10 +9,10 @@ export const AffixSortingValues =
   " Life Regenerated Per Second" : 54,
   " To Maximum Mana" : 55,
   "% Increased Evasion Rating" : 56,
-  "% Increased Armor Rating" : 57,
+  "% Increased Armour" : 57,
   "% Increased Energy Shield" : 58,
   " To Evasion Rating" : 59,
-  " To Armor Rating" : 60,
+  " To Armour" : 60,
   " To Energy Shield" : 61,
   "% Increased Rarity of Items Found" : 62,
   "% To Fire Resistance" : 63,
@@ -23,5 +23,10 @@ export const AffixSortingValues =
   "% Reduced Attribute Requirements" : 68,
   " Physical Damage To Melee Attackers" : 69,
   "% Increased Light Radius" : 70,
-  "% Chance To Dodge Attacks" : 71
+  "% Chance To Dodge Attacks" : 71,
+
+    // Guess
+    " Life gained for each Enemy hit by your Attacks": 99,
+    " of Physical Attack Damage Leeched as Life": 100,
+    " of Physical Attack Damage Leeched as Mana": 101
 };
