@@ -73,7 +73,7 @@ class ItemModsDisplay extends Component {
         return (
           <div className='itemStatsContainer'>
               <ItemPropertiesDisplay />
-              <div className="itemImageDiv"><img src={iconFile} alt={altName}/></div>
+              <div className="itemImageDiv"><img className="itemImage" src={iconFile} alt={altName}/></div>
               <div className="affixContainer">
                 {this.formatAffixData()}
                 {this.formatCraftedAffixData()}
