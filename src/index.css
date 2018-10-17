@@ -39,6 +39,7 @@ body {
   background-color: rgba(0, 0, 0, 0.8);
 	height: 70%;
 	width: 60%;
+    min-width: 320px;
 }
 
 .itemStatsContainer {
@@ -69,8 +70,13 @@ body {
 }
 
 img {
-  max-width: 95%;
-  max-height: 95%;
+  /*max-width: 95%;*/
+  /*max-height: 95%;*/
+  margin: auto
+}
+
+.itemImage{
+    height: 25vh;
 }
 
 .itemHeaderContainer {
@@ -82,7 +88,7 @@ img {
 
 .itemHeaderText {
   position: absolute;
-  font-size: 1.3vw;
+  font-size: 1.3vmax;
   width: 90%;
   top: 45%;
   left: 50%;
@@ -90,6 +96,8 @@ img {
 }
 
 #itemHeaderImage {
+  max-width: 95%;
+  max-height: 95%;
   width: 100%;
 }
 
@@ -108,12 +116,12 @@ img {
 
 .tooltipText {
 	text-align: center;
-  font-size: 1.2vw;
+  font-size: 1.2vmax;
 }
 
 .craftedModText {
   text-align: center;
-  font-size: 1.2vw;
+  font-size: 1.2vmax;
   color: white;
 }
 
@@ -129,10 +137,13 @@ img {
   display: flex;
   flex-direction: row;
   flex-wrap: wrap;
-  justify-content: space-around;
+  /*justify-content: space-around;*/
+  justify-content: center;
 	/* background-color: rgba(0, 0, 256, 0.2); */
   width: 100%;
-  height: 40%;
+  /*height: 40%;*/
+  min-height: fit-content;
+  align-items: center;
 }
 
 .metamodButtonContainer {
@@ -142,8 +153,10 @@ img {
 }
 
 .orbButton {
-  width: 20%;
-  height: 50%;
+    width: 5.6vmax;
+    height: 5.6vmax;
+  /*width: 20%;*/
+  /*height: 50%;*/
 }
 
 button {
@@ -153,7 +166,7 @@ button {
 
 .currencyCounterContainer {
   color: white;
-  font-size: 1.2vw;
+  font-size: 1.2vmax;
   height: 60%;
   width: 100%;
 }
@@ -164,7 +177,7 @@ button {
   align-items: center;
   justify-content: flex-start;
   color: white;
-  font-size: 1.5vw;
+  font-size: 1.5vmax;
   height: 60%;
   width: 100%;
 }
@@ -178,17 +191,19 @@ button {
 
 .resetCurrencyCounter {
   background-color: black;
-  width: 20%;
+  /*width: 20%;*/
   height: 10%;
   border: 2px solid white;
   border-radius: 12px;
   color: #ffffff;
   margin-bottom: 10px;
   margin-top: 20px;
+  margin-left: 0.5vw;
+  margin-right: 0.5vw;
 }
 
 .resetCurrencyCounter span {
-  font-size: 1vw;
+  font-size: 1vmax;
   display: block;
   text-align: center;
 }
@@ -302,4 +317,11 @@ button {
 #divine {
 	background: url('./assets/Buttons/Divine.png') no-repeat;
 	background-size: 100% 100%;
+}
+
+#switch{
+    background: url('assets/Buttons/switch.png') no-repeat center;
+    background-size: 50% 50%;
+    width: 6vmax;
+    height: 6vmax;
 }

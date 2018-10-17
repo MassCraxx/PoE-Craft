@@ -28,9 +28,6 @@ class ItemModsDisplay extends Component {
       for (var i=0; i<A.length; i++) {
         for (var j=0; j<A[i].length ;j++) {
           var modValue = Object.assign({}, A[i][j]);
-          if (modValue.affix==="Life Regen") {
-            modValue.value /= 100;
-          }
           arr.push(modValue);
         }
       }
@@ -71,10 +68,12 @@ class ItemModsDisplay extends Component {
     }
 
     render() {
+        var iconFile = require("../../assets/" + this.props.currentProperties.iconFile);
+        var altName = this.props.currentProperties.baseName;
         return (
           <div className='itemStatsContainer'>
               <ItemPropertiesDisplay />
-              <div className="itemImageDiv"><img src={require("../../assets/BodyDEX/AssassinsGarb.png")} alt='BodyDEX'/></div>
+              <div className="itemImageDiv"><img className="itemImage" src={iconFile} alt={altName}/></div>
               <div className="affixContainer">
                 {this.formatAffixData()}
                 {this.formatCraftedAffixData()}
